@@ -43,7 +43,7 @@ model = ChatGoogleGenerativeAI(
 )
 
 # Server configuration
-SERVER_PATH = os.getenv("MCP_SERVER_PATH", r"C:\Users\ijona\Desktop\MCP\mcp_server.py")
+SERVER_PATH = os.getenv("MCP_SERVER_PATH", r"C:\Users\MCP\mcp_server.py")
 server_params = StdioServerParameters(
     command="python",
     args=[SERVER_PATH], 
