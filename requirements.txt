@@ -1,0 +1,10 @@
+# Core libraries
+langchain
+langgraph
+mcp
+langchain-google-genai
+python-dotenv
+aiohttp
+tqdm
+langchain_mcp_adapters
+firecrawl
