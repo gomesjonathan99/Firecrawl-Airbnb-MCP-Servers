@@ -10,54 +10,54 @@ from dotenv import load_dotenv
 import asyncio
 import os
 
-class Airbnb(BaseModel):
-    """
-    Model representing an Airbnb listing with comprehensive attributes.
+# class Airbnb(BaseModel):
+#     """
+#     Model representing an Airbnb listing with comprehensive attributes.
 
-    Attributes:
-        id (str): Unique identifier for the listing.
-        name (str): Title of the listing.
-        host_name (str): Name of the host.
-        location (str): Location of the listing (city, state, country).
-        latitude (float): Latitude coordinate of the listing.
-        longitude (float): Longitude coordinate of the listing.
-        price_per_night (float): Nightly price in USD.
-        min_nights (int): Minimum nights required for booking.
-        max_nights (int): Maximum nights allowed for booking.
-        availability_365 (int): Number of days the listing is available per year.
-        amenities (List[str]): List of amenities offered.
-        property_type (str): Type of property (e.g., Apartment, House, Villa).
-        room_type (str): Type of room (e.g., Entire home, Private room).
-        number_of_guests (int): Max number of guests allowed.
-        number_of_bedrooms (int): Total bedrooms.
-        number_of_beds (int): Total beds.
-        number_of_bathrooms (float): Total bathrooms.
-        rating (Optional[float]): Average rating score (0.0 - 5.0).
-        number_of_reviews (int): Total number of reviews.
-        last_review_date (Optional[date]): Date of the last review.
-        is_superhost (bool): Whether the host is a Superhost.
-    """
-    id: str
-    name: str
-    host_name: str
-    location: str
-    latitude: float
-    longitude: float
-    price_per_night: float
-    min_nights: int
-    max_nights: int
-    availability_365: int
-    amenities: List[str]
-    property_type: str
-    room_type: str
-    number_of_guests: int
-    number_of_bedrooms: int
-    number_of_beds: int
-    number_of_bathrooms: float
-    rating: Optional[float] = None
-    number_of_reviews: int
-    last_review_date: Optional[date] = None
-    is_superhost: bool
+#     Attributes:
+#         id (str): Unique identifier for the listing.
+#         name (str): Title of the listing.
+#         host_name (str): Name of the host.
+#         location (str): Location of the listing (city, state, country).
+#         latitude (float): Latitude coordinate of the listing.
+#         longitude (float): Longitude coordinate of the listing.
+#         price_per_night (float): Nightly price in USD.
+#         min_nights (int): Minimum nights required for booking.
+#         max_nights (int): Maximum nights allowed for booking.
+#         availability_365 (int): Number of days the listing is available per year.
+#         amenities (List[str]): List of amenities offered.
+#         property_type (str): Type of property (e.g., Apartment, House, Villa).
+#         room_type (str): Type of room (e.g., Entire home, Private room).
+#         number_of_guests (int): Max number of guests allowed.
+#         number_of_bedrooms (int): Total bedrooms.
+#         number_of_beds (int): Total beds.
+#         number_of_bathrooms (float): Total bathrooms.
+#         rating (Optional[float]): Average rating score (0.0 - 5.0).
+#         number_of_reviews (int): Total number of reviews.
+#         last_review_date (Optional[date]): Date of the last review.
+#         is_superhost (bool): Whether the host is a Superhost.
+#     """
+#     id: str
+#     name: str
+#     host_name: str
+#     location: str
+#     latitude: float
+#     longitude: float
+#     price_per_night: float
+#     min_nights: int
+#     max_nights: int
+#     availability_365: int
+#     amenities: List[str]
+#     property_type: str
+#     room_type: str
+#     number_of_guests: int
+#     number_of_bedrooms: int
+#     number_of_beds: int
+#     number_of_bathrooms: float
+#     rating: Optional[float] = None
+#     number_of_reviews: int
+#     last_review_date: Optional[date] = None
+#     is_superhost: bool
 
 load_dotenv()   
 
