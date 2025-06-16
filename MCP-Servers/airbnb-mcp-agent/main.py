@@ -3,7 +3,6 @@ from mcp.client.stdio import stdio_client
 from langchain_mcp_adapters.tools import load_mcp_tools
 from langgraph.prebuilt import create_react_agent
 from langchain_openai import ChatOpenAI
-from langchain.output_parsers import PydanticOutputParser
 from pydantic import BaseModel, Field
 from typing import Optional, List, Any
 from datetime import date
@@ -20,8 +19,6 @@ class AirbnbSearch(BaseModel):
     guests: int = Field(..., ge=1, description="Number of guests")
     min_price: Optional[float] = Field(None, ge=0, description="Minimum price per night")
     
-    
-output_parser = PydanticOutputParser(pydantic_object=AirbnbSearch)
 
 llm = ChatOpenAI(
     model="gpt-4o-mini",
