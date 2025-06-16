@@ -1,3 +1,4 @@
+# importing necessary libraries
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
 from langchain_mcp_adapters.tools import load_mcp_tools
@@ -10,8 +11,10 @@ from dotenv import load_dotenv
 import asyncio
 import os
 
+# loading .env variables
 load_dotenv() 
 
+# Creating a Response class 
 class AirbnbSearch(BaseModel):
     location: str = Field(..., description="City or location to search for stays")
     check_in: date = Field(..., description="Check-in date")
@@ -19,13 +22,14 @@ class AirbnbSearch(BaseModel):
     guests: int = Field(..., ge=1, description="Number of guests")
     min_price: Optional[float] = Field(None, ge=0, description="Minimum price per night")
     
-
+# initializing the llm
 llm = ChatOpenAI(
     model="gpt-4o-mini",
     temperature=0,
     openai_api_key=os.getenv("OPENAI_API_KEY")
 )
 
+# server paramerters
 server_params = StdioServerParameters(
     command="npx",
     args= [
@@ -39,13 +43,13 @@ async def main():
     async with stdio_client(server_params) as (read, write):
         async with ClientSession(read, write) as session:
             await session.initialize()
-            tools = await load_mcp_tools(session)
-            agent = create_react_agent(llm, tools, response_format=AirbnbSearch)
+            tools = await load_mcp_tools(session) # retrieving tools from server
+            agent = create_react_agent(llm, tools, response_format=AirbnbSearch) # passing response format calss
 
             messages = [
                 {
                     "role": "system",
-                    "content": "You are a helpful assistant that can scrape websites, crawl pages,"
+                    "content": "You are a helpful assistant that can scrape Airbnb website, crawl pages,"
                                 "and extract data using Airbnb tools."
                                 "Think step by step and use the appropriate tools to help the user."
                 }
