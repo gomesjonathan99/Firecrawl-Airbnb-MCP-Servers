@@ -3,14 +3,25 @@ from mcp.client.stdio import stdio_client
 from langchain_mcp_adapters.tools import load_mcp_tools
 from langgraph.prebuilt import create_react_agent
 from langchain_openai import ChatOpenAI
-from pydantic import BaseModel
-from typing import Optional, List
+from langchain.output_parsers import PydanticOutputParser
+from pydantic import BaseModel, Field
+from typing import Optional, List, Any
 from datetime import date
 from dotenv import load_dotenv
 import asyncio
 import os
 
-load_dotenv()   
+load_dotenv() 
+
+class AirbnbSearch(BaseModel):
+    location: str = Field(..., description="City or location to search for stays")
+    check_in: date = Field(..., description="Check-in date")
+    check_out: date = Field(..., description="Check-out date")
+    guests: int = Field(..., ge=1, description="Number of guests")
+    min_price: Optional[float] = Field(None, ge=0, description="Minimum price per night")
+    
+    
+output_parser = PydanticOutputParser(pydantic_object=AirbnbSearch)
 
 llm = ChatOpenAI(
     model="gpt-4o-mini",
@@ -23,7 +34,8 @@ server_params = StdioServerParameters(
     args= [
         "-y",
         "@openbnb/mcp-server-airbnb"
-]
+    ]
+
 )
 
 async def main():
@@ -31,12 +43,14 @@ async def main():
         async with ClientSession(read, write) as session:
             await session.initialize()
             tools = await load_mcp_tools(session)
-            agent = create_react_agent(llm, tools)
+            agent = create_react_agent(llm, tools, response_format=AirbnbSearch)
 
             messages = [
                 {
                     "role": "system",
-                    "content": "You are a helpful assistant that can scrape websites, crawl pages, and extract data using Airbnb tools. Think step by step and use the appropriate tools to help the user."
+                    "content": "You are a helpful assistant that can scrape websites, crawl pages,"
+                                "and extract data using Airbnb tools."
+                                "Think step by step and use the appropriate tools to help the user."
                 }
             ]
 
@@ -45,7 +59,7 @@ async def main():
             print("🏡 Welcome to Airbnb AI Search!")
             while True:
                 user_input = input("\nYou: ").lower()
-                if user_input == ["q" ,"bye","quit"]:
+                if user_input in ["q" ,"bye","quit"]:
                     print("Goodbye")
                     break
 
